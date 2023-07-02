@@ -1,4 +1,4 @@
-package by.radiance.qr.ui.theme
+package by.radiance.qr.theme
 
 import android.app.Activity
 import android.os.Build
