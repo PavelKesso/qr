@@ -1,4 +1,4 @@
-package by.radiance.qr.theme
+package by.radiance.qr.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

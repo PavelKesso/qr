@@ -1,4 +1,4 @@
-package by.radiance.qr.cell
+package by.radiance.qr.ui.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,14 +19,16 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import by.radiance.qr.cell.model.CellState
-import by.radiance.qr.theme.QrTheme
+import by.radiance.qr.model.qr.Qr
+import by.radiance.qr.model.state.CellColor
+import by.radiance.qr.ui.cell.model.CellState
+import by.radiance.qr.ui.theme.QrTheme
 import by.radiance.qr.utils.getNext
 
 @Composable
 fun Cell(
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = MaterialTheme.shapes.small.copy(all = CornerSize(0.dp)),
     enabled: Boolean,
     states: List<CellState>,
     startState: CellState = states.first(),
@@ -44,6 +46,31 @@ fun Cell(
     )
 }
 
+@Composable
+fun Cell(
+    modifier: Modifier = Modifier,
+    cell: Qr.Cell,
+    onStateChanged: (CellColor) -> Unit
+) {
+    Cell(
+        modifier = modifier,
+        enabled = cell.enabled,
+        states = cell.states.map { CellState(it, when(it) {
+            CellColor.Black -> Color.Black
+            CellColor.White -> Color.White
+        }) },
+        startState = cell.initialState.let{
+            CellState(it, when(it) {
+                CellColor.Black -> Color.Black
+                CellColor.White -> Color.White
+            })
+        },
+        onStateChanged = {
+            onStateChanged.invoke(it.cellColor)
+        }
+    )
+}
+
 @Preview
 @Composable
 fun CellPreview() {
@@ -56,7 +83,7 @@ fun CellPreview() {
                 ,
                 shape = MaterialTheme.shapes.small.copy(all = CornerSize(3.dp)),
                 enabled = true,
-                states = listOf(CellState(1, Color.Black), CellState(2, Color.White), CellState(3, Color.Yellow)),
+                states = listOf(CellState(CellColor.Black, Color.Black), CellState(CellColor.White, Color.White)),
                 onStateChanged = {}
             )
             Cell(
@@ -67,7 +94,7 @@ fun CellPreview() {
                 shape = MaterialTheme.shapes.small.copy(all = CornerSize(3.dp)),
                 enabled = false,
                 states = emptyList(),
-                startState = CellState(1, Color.Black),
+                startState = CellState(CellColor.Black, Color.Black),
                 onStateChanged = {}
             )
         }
