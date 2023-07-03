@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "qr"
 include(":app")
+include(":builder")

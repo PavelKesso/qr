@@ -21,3 +21,17 @@ fun defaultCell(x: Int, y: Int): Qr.Cell = Qr.Cell(
     enabled = true,
     initialState = CellColor.White,
 )
+
+fun whiteCell(x: Int, y: Int): Qr.Cell = Qr.Cell(
+    position = Position(x, y),
+    states = listOf(CellColor.White, CellColor.Black),
+    enabled = false,
+    initialState = CellColor.White,
+)
+
+fun blackCell(x: Int, y: Int): Qr.Cell = Qr.Cell(
+    position = Position(x, y),
+    states = listOf(CellColor.White, CellColor.Black),
+    enabled = false,
+    initialState = CellColor.Black,
+)
